@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy package files để install dependencies trước (tận dụng Docker cache)
 COPY package*.json ./
-RUN npm install
+RUN apk add --no-cache python3 make g++ && npm install
 
 # Copy toàn bộ source code và build
 COPY . .

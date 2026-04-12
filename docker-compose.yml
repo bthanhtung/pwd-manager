@@ -27,6 +27,8 @@ services:
     ports:
       - "3000:3000"
     env_file: .env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/passmanager
     depends_on:
       - mongodb
       - redis

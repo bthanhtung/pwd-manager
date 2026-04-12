@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors(); // 👈 Enable CORS for frontend requests
 
   // 1. Tự động validate dữ liệu theo DTO
   app.useGlobalPipes(
