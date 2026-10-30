@@ -7,6 +7,8 @@
 **Your passwords, encrypted before they leave your device.**
 Open-source, zero-knowledge password manager for you and your team — self-hosted in one command.
 
+🇻🇳 [Hướng dẫn tiếng Việt](docs/vi/HUONG-DAN.md)
+
 [![CI](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6d4aff.svg)](LICENSE)
 ![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbthanhtung%2Fopenpass-2496ED?logo=docker&logoColor=white)
@@ -140,7 +142,7 @@ team key (random)      = sealed to each member: ECDH P-256 ephemeral + HKDF + AE
 - Strict Content-Security-Policy, no third-party scripts, no trackers, no favicon fetching.
 - Known limitations (v2.0): removing a team member revokes server access but does not yet rotate the team key; there is no browser extension yet.
 
-Found a vulnerability? Please email **bthanhtung.ite@gmail.com** instead of opening a public issue.
+Full threat model and crypto details: [SECURITY.md](SECURITY.md). Found a vulnerability? Please email **bthanhtung.ite@gmail.com** instead of opening a public issue.
 
 ---
 
