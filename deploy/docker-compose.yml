@@ -2,11 +2,12 @@
 #
 #   1. Point a DNS A record (e.g. pass.example.com) to this server's IP.
 #   2. cp .env.example .env   and set DOMAIN=pass.example.com
-#   3. docker compose up -d
+#   3. docker compose up -d --build
 #
 services:
   openpass:
-    image: ghcr.io/bthanhtung/openpass:latest
+    image: openpass:local
+    build: ..
     restart: unless-stopped
     volumes:
       - openpass-data:/data

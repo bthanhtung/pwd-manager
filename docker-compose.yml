@@ -1,8 +1,8 @@
-# Quick start:   docker compose up -d        → http://localhost:8080
+# Quick start:   docker compose up -d --build        → http://localhost:8080
 # With Postgres: docker compose --profile postgres up -d   (and uncomment DATABASE_URL below)
 services:
   openpass:
-    image: ghcr.io/bthanhtung/openpass:latest
+    image: openpass:local
     build: .
     container_name: openpass
     restart: unless-stopped

@@ -121,11 +121,9 @@ export default function Landing() {
           </ul>
           <a href={`${REPO}#self-hosting`} className="btn-outline mt-7"><Github className="size-4" />{t('l.guide', 'Read the self-hosting guide')}</a>
         </div>
-        <CodeBlock code={`docker run -d --name openpass \\
-  -p 8080:8080 \\
-  -v openpass-data:/data \\
-  -e APP_URL=https://pass.example.com \\
-  ghcr.io/bthanhtung/openpass:latest`} />
+        <CodeBlock code={`git clone https://github.com/bthanhtung/pwd-manager.git
+  cd pwd-manager
+  docker compose up -d --build`} />
       </section>
 
       {/* faq */}
@@ -194,7 +192,7 @@ function CodeBlock({ code }: { code: string }) {
     <div className="flex items-center gap-1.5 px-4 h-10 border-b border-white/10">
       {['#ff5f57', '#febc2e', '#28c840'].map(c => <span key={c} className="size-3 rounded-full" style={{ background: c }} />)}
       <span className="ml-3 text-xs text-white/40 font-mono">terminal</span>
-      <button className="ml-auto text-white/50 hover:text-white" aria-label="Copy" onClick={() => { navigator.clipboard.writeText(code.replace(/\\\n\s*/g, '')); setOk(true); setTimeout(() => setOk(false), 1500); }}>
+      <button className="ml-auto text-white/50 hover:text-white" aria-label="Copy" onClick={() => { navigator.clipboard.writeText(code.split('\n').map(l => l.trim()).join(' && ')); setOk(true); setTimeout(() => setOk(false), 1500); }}>
         {ok ? <Check className="size-4 text-[#3dd68c]" /> : <Copy className="size-4" />}</button>
     </div>
     <pre className="p-5 text-[13px] leading-6 font-mono text-[#d6d6e7] overflow-x-auto"><span className="text-[#3dd68c]">$ </span>{code}</pre>

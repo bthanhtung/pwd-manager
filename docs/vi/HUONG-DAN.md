@@ -8,13 +8,17 @@ nên kể cả người quản lý máy chủ cũng không đọc được mật
 ### Cách A — Thử trên máy tính của bạn (5 phút)
 
 1. Cài **Docker Desktop**: <https://www.docker.com/products/docker-desktop/> rồi mở lên.
+   Cài thêm **Git**: <https://git-scm.com/downloads> (Mac và Linux thường có sẵn).
 2. Mở **Terminal** (macOS) hoặc **PowerShell** (Windows), dán lệnh:
    ```bash
-   docker run -d --name openpass -p 8080:8080 -v openpass-data:/data ghcr.io/bthanhtung/openpass:latest
+   git clone https://github.com/bthanhtung/pwd-manager.git
+   cd pwd-manager
+   docker compose up -d --build
    ```
+   Lần đầu build mất vài phút; những lần sau bật lên ngay.
 3. Mở trình duyệt vào <http://localhost:8080> → bấm **Bắt đầu**.
 
-Tắt: `docker stop openpass` · Bật lại: `docker start openpass`. Dữ liệu nằm trong volume `openpass-data`, không mất khi tắt.
+Tắt: `docker compose stop` · Bật lại: `docker compose start`. Dữ liệu nằm trong volume `openpass-data`, không mất khi tắt.
 
 ### Cách B — Đưa lên mạng cho gia đình / công ty (15 phút)
 
@@ -31,14 +35,14 @@ Cần: một máy chủ Linux (VPS bất kỳ) và một tên miền.
    cp .env.example .env
    nano .env        # sửa DOMAIN=pass.tencongty.com
    ```
-4. Chạy (chứng chỉ HTTPS được cấp tự động):
+4. Build và chạy (chứng chỉ HTTPS được cấp tự động):
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 5. Vào `https://pass.tencongty.com`, tạo tài khoản; đồng nghiệp tự tạo tài khoản của họ.
 6. Khi mọi người đã vào đủ: sửa `SIGNUPS_ALLOWED=false` trong `.env` rồi chạy lại `docker compose up -d` để **đóng đăng ký**.
 
-Cập nhật phiên bản mới: `docker compose pull && docker compose up -d`.
+Cập nhật phiên bản mới: `git pull && docker compose up -d --build`.
 
 ## 2. Sử dụng
 

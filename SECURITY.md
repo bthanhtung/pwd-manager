@@ -3,8 +3,8 @@
 ## Reporting a vulnerability
 
 Please **do not open a public issue**. Email **bthanhtung.ite@gmail.com** with a description, steps to reproduce
-and the affected version. You will get an answer within 72 hours. Fixes are released as a new image tag and noted
-in the release notes, with credit if you want it.
+and the affected version. You will get an answer within 72 hours. Fixes land on `main` with a note in the
+commit message, with credit if you want it. Self-hosters update with `git pull && docker compose up -d --build`.
 
 ## Threat model
 

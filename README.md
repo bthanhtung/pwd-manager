@@ -11,7 +11,6 @@ Open-source, zero-knowledge password manager for you and your team — self-host
 
 [![CI](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6d4aff.svg)](LICENSE)
-![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbthanhtung%2Fopenpass-2496ED?logo=docker&logoColor=white)
 ![Languages](https://img.shields.io/badge/i18n-English%20·%20Tiếng%20Việt-3dd68c)
 
 <img src="docs/media/demo.gif" alt="OpenPass demo: sign up, import, reveal and copy a password, generator, security report" width="900" />
@@ -50,14 +49,18 @@ Pick **one** of the three paths. Each step is a copy-paste.
 ### Path A — Try it on your computer (5 minutes)
 
 1. **Install Docker Desktop** → <https://www.docker.com/products/docker-desktop/> and open it.
+   Also install **Git** → <https://git-scm.com/downloads> (already there on most Macs and Linux).
 2. **Open a terminal** (macOS: *Terminal*, Windows: *PowerShell*) and run:
    ```bash
-   docker run -d --name openpass -p 8080:8080 -v openpass-data:/data ghcr.io/bthanhtung/openpass:latest
+   git clone https://github.com/bthanhtung/pwd-manager.git
+   cd pwd-manager
+   docker compose up -d --build
    ```
+   The first build takes a few minutes; later starts are instant.
 3. **Open** <http://localhost:8080> and click **Get started**.
-4. Want sample data? Download [`docs/demo/demo-vault.json`](docs/demo/demo-vault.json) (all fake) and import it — see [Use it](#-use-it).
+4. Want sample data? Import [`docs/demo/demo-vault.json`](docs/demo/demo-vault.json) (all fake) — see [Use it](#-use-it).
 
-Stop: `docker stop openpass` · Start again: `docker start openpass` · Your data stays in the `openpass-data` volume.
+Stop: `docker compose stop` · Start again: `docker compose start` · Your data stays in the `openpass-data` volume.
 
 ### Path B — Put it online for your family or team (15 minutes)
 
@@ -74,14 +77,14 @@ You need: a small Linux server (any VPS) and a domain name.
    cp .env.example .env
    nano .env          # set DOMAIN=pass.example.com
    ```
-4. **Start** (HTTPS certificate is issued automatically by Caddy):
+4. **Build and start** (HTTPS certificate is issued automatically by Caddy):
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 5. Open `https://pass.example.com`, create your account, then your teammates create theirs.
 6. **Close registration** when everyone is in: set `SIGNUPS_ALLOWED=false` in `.env`, then `docker compose up -d`.
 
-**Update** later: `docker compose pull && docker compose up -d` (database migrations run automatically).
+**Update** later: `git pull && docker compose up -d --build` (database migrations run automatically).
 **Back up**: copy the `openpass-data` volume, *and* ask users to keep an encrypted export (below).
 
 ### Path C — Run from source (developers)
@@ -142,7 +145,7 @@ team key (random)      = sealed to each member: ECDH P-256 ephemeral + HKDF + AE
 - Strict Content-Security-Policy, no third-party scripts, no trackers, no favicon fetching.
 - Known limitations (v2.0): removing a team member revokes server access but does not yet rotate the team key; there is no browser extension yet.
 
-Full threat model and crypto details: [SECURITY.md](SECURITY.md). Found a vulnerability? Please email **bthanhtung.ite@gmail.com** instead of opening a public issue.
+Full threat model and crypto details: [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -166,4 +169,4 @@ Issues and PRs welcome. Run `npm test` before opening a PR; new UI strings go th
 
 ## 📄 License
 
-[MIT](LICENSE) — made with care by [TungDaDev](https://www.tungdadev.com/) & [Davintek](https://davintek.com/).
+[MIT](LICENSE)
