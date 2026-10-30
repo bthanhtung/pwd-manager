@@ -2,7 +2,7 @@ import { Controller, DynamicModule, Get, Inject, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ApiTags } from '@nestjs/swagger';
-import { AccountController } from './account/account.controller';
+import { AccountController, SessionController } from './account/account.controller';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { CsrfGuard, Public, SessionGuard } from './common/guards';
@@ -34,7 +34,7 @@ export class AppModule {
         DatabaseModule,
         ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 300 }]),
       ],
-      controllers: [MetaController, AuthController, AccountController, SyncController, ItemsController, FoldersController, TeamsController],
+      controllers: [MetaController, AuthController, SessionController, AccountController, SyncController, ItemsController, FoldersController, TeamsController],
       providers: [
         SessionService, AuthService, AccessService,
         { provide: APP_GUARD, useClass: ThrottlerGuard },

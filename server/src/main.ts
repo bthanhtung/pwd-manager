@@ -27,6 +27,7 @@ export function configureApp(app: INestApplication, config: AppConfig) {
       },
     },
     crossOriginEmbedderPolicy: false,
+    hsts: config.secureCookies,             // only promise HTTPS when we are actually served over it
   }));
   app.use(cookieParser());
   app.setGlobalPrefix('api');
@@ -37,11 +38,11 @@ function serveWeb(app: NestExpressApplication, dir: string) {
   if (!existsSync(join(dir, 'index.html'))) return;
   app.useStaticAssets(dir, { index: false, maxAge: '1y', immutable: true, setHeaders: (res, path) => {
     // index.html, the service worker and the manifest must always be revalidated
-    if (/(index\.html|sw\.js|manifest\.webmanifest|registerSW\.js)$/.test(path)) res.setHeader('Cache-Control', 'no-cache');
+    if (/(index\.html|sw\.js|manifest\.webmanifest|registerSW\.js|theme\.js)$/.test(path)) res.setHeader('Cache-Control', 'no-cache');
   } });
   // Single-page app: every non-API GET falls back to index.html.
   app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.method !== 'GET' || req.path.startsWith('/api')) return next();
+    if ((req.method !== 'GET' && req.method !== 'HEAD') || req.path.startsWith('/api')) return next();
     res.setHeader('Cache-Control', 'no-cache');
     res.sendFile(join(dir, 'index.html'));
   });
@@ -57,7 +58,7 @@ async function main() {
   SwaggerModule.setup('api/docs', app, doc);
   serveWeb(app, config.webDir);
   app.enableShutdownHooks();
-  await app.listen(config.port, '0.0.0.0');
+  await app.listen(config.port, process.env.HOST || '0.0.0.0');
   Logger.log(`OpenPass listening on ${config.appUrl} (db: ${config.databaseUrl.split(':')[0]})`, 'Bootstrap');
 }
 

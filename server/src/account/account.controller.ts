@@ -8,7 +8,7 @@ import { randomBytes } from 'node:crypto';
 import { authenticator } from 'otplib';
 import { AuthService, profileOf } from '../auth/auth.service';
 import { KdfDto } from '../auth/dto';
-import { authLimit, SessionId, UserId } from '../common/guards';
+import { authLimit, Public, SessionId, UserId } from '../common/guards';
 import { now, SESSION_COOKIE, SessionService } from '../common/session.service';
 import { B64URL_RE, IsCipher } from '../common/validators';
 import { DB, Db } from '../db/database.module';
@@ -22,6 +22,19 @@ class ChangePasswordDto {
   @Matches(B64URL_RE) @Length(43, 43) newAuthKey: string;
   @ValidateNested() @Type(() => KdfDto) newKdf: KdfDto;
   @IsCipher(400) newProtectedUserKey: string;
+}
+
+/** Lets the web app ask "am I signed in?" without producing a 401 for logged-out visitors. */
+@ApiTags('account')
+@Controller('session')
+export class SessionController {
+  constructor(@Inject(DB) private db: Db) {}
+  @Public() @Get()
+  async current(@Req() req: Request & { userId?: string }) {
+    if (!req.userId) return { authenticated: false };
+    const u = await this.db.selectFrom('users').selectAll().where('id', '=', req.userId).executeTakeFirst();
+    return u ? { authenticated: true, profile: profileOf(u) } : { authenticated: false };
+  }
 }
 
 @ApiTags('account')
