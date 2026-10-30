@@ -1,0 +1,55 @@
+{
+  "name": "openpass-server",
+  "version": "2.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "dev": "tsx watch src/main.ts",
+    "test": "jest --runInBand",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "rootDir": ".",
+    "testMatch": [
+      "<rootDir>/test/**/*.spec.ts"
+    ],
+    "testTimeout": 30000
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.2.8",
+    "@nestjs/core": "^11.2.8",
+    "@nestjs/platform-express": "^11.2.8",
+    "@nestjs/swagger": "^11.4.7",
+    "@nestjs/throttler": "^6.7.1",
+    "argon2": "^0.41.1",
+    "better-sqlite3": "^11.10.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "cookie-parser": "^1.4.7",
+    "helmet": "^8.3.0",
+    "kysely": "^0.27.6",
+    "otplib": "^12.0.1",
+    "pg": "^8.23.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.2.8",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.19.43",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.3.1",
+    "ts-jest": "^29.4.15",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}
