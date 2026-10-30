@@ -11,3 +11,4 @@ coverage/
 server/public/
 web/dev-dist/
 *.tsbuildinfo
+.server-secret

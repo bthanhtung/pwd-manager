@@ -25,10 +25,11 @@ export interface AppConfig {
 
 const bool = (v: string | undefined, d: boolean) => (v === undefined || v === '' ? d : /^(1|true|yes|on)$/i.test(v));
 
-function loadSecret(databaseUrl: string): string {
-  if (process.env.SERVER_SECRET) return process.env.SERVER_SECRET;
-  // Persist a generated secret beside the SQLite database so restarts keep it stable.
-  const file = databaseUrl.startsWith('sqlite:') ? join(dirname(sqlitePath(databaseUrl)), '.server-secret') : null;
+function loadSecret(env: NodeJS.ProcessEnv, databaseUrl: string): string {
+  if (env.SERVER_SECRET) return env.SERVER_SECRET;
+  // Persist a generated secret beside the SQLite file so restarts keep it stable (not for in-memory databases).
+  const path = databaseUrl.startsWith('sqlite:') ? sqlitePath(databaseUrl) : ':memory:';
+  const file = path !== ':memory:' ? join(dirname(path), '.server-secret') : null;
   if (file && existsSync(file)) return readFileSync(file, 'utf8').trim();
   const secret = randomBytes(32).toString('base64url');
   if (file) {
@@ -51,7 +52,7 @@ export function loadConfig(env = process.env): AppConfig {
     port: Number(env.PORT || 8080),
     appUrl,
     signupsAllowed: bool(env.SIGNUPS_ALLOWED, true),
-    serverSecret: loadSecret(databaseUrl),
+    serverSecret: loadSecret(env, databaseUrl),
     trustProxy: bool(env.TRUST_PROXY, true),
     secureCookies: appUrl.startsWith('https://'),
     webDir: env.WEB_DIR || join(__dirname, '..', 'public'),
