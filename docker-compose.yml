@@ -1,0 +1,32 @@
+# Quick start:   docker compose up -d        → http://localhost:8080
+# With Postgres: docker compose --profile postgres up -d   (and uncomment DATABASE_URL below)
+services:
+  openpass:
+    image: ghcr.io/bthanhtung/openpass:latest
+    build: .
+    container_name: openpass
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - openpass-data:/data
+    environment:
+      APP_URL: ${APP_URL:-http://localhost:8080}       # your public https:// URL in production
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED:-true}         # set to false once your people have accounts
+      # DATABASE_URL: postgres://openpass:${POSTGRES_PASSWORD:-change-me}@postgres:5432/openpass
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: [postgres]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: openpass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: openpass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    # no "ports:" — the database is only reachable from the openpass container
+
+volumes:
+  openpass-data:
+  postgres-data:

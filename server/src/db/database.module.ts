@@ -10,7 +10,12 @@ export type Db = Kysely<Database>;
 
 export async function createDb(databaseUrl: string): Promise<Db> {
   let db: Db;
-  if (/^postgres(ql)?:\/\//.test(databaseUrl)) {
+  if (databaseUrl.startsWith('pglite:')) {
+    // In-process Postgres (WASM) — used by the test suite to check Postgres compatibility without a server.
+    const { PGlite } = await import('@electric-sql/pglite');
+    const { PGliteDialect } = await import('kysely-pglite-dialect');
+    db = new Kysely<Database>({ dialect: new PGliteDialect(new PGlite()) });
+  } else if (/^postgres(ql)?:\/\//.test(databaseUrl)) {
     const { Pool } = await import('pg');
     db = new Kysely<Database>({ dialect: new PostgresDialect({ pool: new Pool({ connectionString: databaseUrl, max: 10 }) }) });
   } else {

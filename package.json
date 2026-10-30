@@ -1,0 +1,15 @@
+{
+  "name": "openpass",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Open-source, zero-knowledge password manager for you and your team.",
+  "license": "MIT",
+  "scripts": {
+    "setup": "npm ci --prefix server && npm ci --prefix web",
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run build --prefix web && npm run build --prefix server",
+    "start": "npm start --prefix server",
+    "test": "npm test --prefix server && npm run test:pg --prefix server && npm test --prefix web"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,301 +1,167 @@
-# Open Pass Manager 🛡️
+<div align="center">
 
-A self-hosted, team-oriented password and secret manager. Passwords are **encrypted at rest** with AES-256-GCM and never exposed in plaintext. Built for individuals and teams that need fine-grained access control over shared credentials.
+<img src="web/public/icon-192.png" width="72" alt="OpenPass logo" />
 
----
+# OpenPass
 
-## Features
+**Your passwords, encrypted before they leave your device.**
+Open-source, zero-knowledge password manager for you and your team — self-hosted in one command.
 
-- 🔐 **AES-256-GCM** encryption — industry-standard authenticated encryption for all stored secrets
-- 🔑 **Argon2id** password hashing — GPU-resistant, modern replacement for bcrypt
-- 👥 **Group-based access** — share vaults with teams; role-based members (Admin / Member)
-- 🪪 **JWT authentication** — stateless, short-lived tokens
-- 📖 **Swagger docs** — auto-generated API documentation at `/docs`
-- 🐳 **Docker Compose** — one-command full-stack deployment
+[![CI](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-6d4aff.svg)](LICENSE)
+![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbthanhtung%2Fopenpass-2496ED?logo=docker&logoColor=white)
+![Languages](https://img.shields.io/badge/i18n-English%20·%20Tiếng%20Việt-3dd68c)
 
----
+<img src="docs/media/demo.gif" alt="OpenPass demo: sign up, import, reveal and copy a password, generator, security report" width="900" />
 
-## Architecture
-
-```
-pwd-manager/
-├── backend/          # NestJS REST API (Port 3000)
-│   └── src/
-│       ├── auth/     # JWT auth, Passport, Argon2
-│       ├── users/    # User persistence
-│       ├── groups/   # Team groups + member roles
-│       ├── vault/    # Encrypted password store
-│       └── common/   # AES-256-GCM crypto service
-│
-├── frontend/         # Next.js 16 UI (Port 3001)
-│
-├── scripts/
-│   └── generate-keys.sh   # Helper to generate secure .env keys
-│
-├── docker-compose.yml     # Full stack: MongoDB, Redis, backend, frontend
-└── .env.example           # Environment variable template
-```
-
-### Service Map
-
-| Service | Technology | Port |
-|---|---|---|
-| REST API | NestJS 11 + TypeScript | 3000 |
-| Frontend | Next.js 16 + TailwindCSS | 3001 |
-| Database | MongoDB | 27017 |
-| Cache / Session | Redis | 6379 |
+</div>
 
 ---
 
-## Quick Start — Docker (Recommended)
+## ✨ Why OpenPass
 
-The fastest way to run the full stack.
-
-### Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
-
-### Steps
-
-**1. Clone the repository**
-
-```bash
-git clone https://github.com/your-user/pwd-manager.git
-cd pwd-manager
-```
-
-**2. Generate secure keys**
-
-```bash
-sh scripts/generate-keys.sh
-```
-
-Output:
-```
-Generating secure keys for .env...
-SERVER_ENCRYPTION_KEY: a1b2c3d4e5f6...   ← copy this
-JWT_SECRET: X9kL3mN8...                  ← copy this
-```
-
-**3. Configure environment**
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and fill in the generated values:
-
-```dotenv
-NODE_ENV=production
-PORT=3000
-
-MONGODB_URI=mongodb://mongodb:27017/passmanager
-REDIS_HOST=redis
-REDIS_PORT=6379
-
-SERVER_ENCRYPTION_KEY=<paste from step 2>   # exactly 32 chars
-JWT_SECRET=<paste from step 2>
-
-NEXT_PUBLIC_API_URL=http://localhost:3000
-```
-
-**4. Build and run**
-
-```bash
-docker compose up --build
-```
-
-**5. Open the app**
-
-| Service | URL |
+| | |
 |---|---|
-| Frontend UI | http://localhost:3001 |
-| Backend API | http://localhost:3000 |
-| Swagger Docs | http://localhost:3000/docs |
+| 🔐 **Zero-knowledge** | Argon2id + AES-256-GCM in your browser. The server stores ciphertext only — not even item names. |
+| 👥 **Teams** | Share with owner / admin / editor / viewer roles. Team keys are sealed to each member with ECDH. |
+| 📥 **Move in fast** | Import Bitwarden, 1Password, LastPass, Chrome, Safari, Firefox. Encrypted export any time. |
+| 🔢 **Authenticator built in** | Live TOTP codes for your logins, plus 2FA for your own account. |
+| 🛡️ **Security report** | Weak, reused and old passwords; private breach check (Have I Been Pwned, k-anonymity). |
+| 📱 **Every device** | Installable PWA, works offline (read-only), dark & light, English & Tiếng Việt. |
+| 🐳 **One container** | SQLite by default, PostgreSQL when you grow. Runs on a $5 VPS, a Pi or a NAS. |
+
+<p align="center">
+  <img src="docs/media/vault-dark.png" width="49%" alt="Vault, dark theme" />
+  <img src="docs/media/vault-light.png" width="49%" alt="Vault, light theme" />
+</p>
+<p align="center">
+  <img src="docs/media/security-report.png" width="66%" alt="Security report" />
+  <img src="docs/media/mobile-item.png" width="23%" alt="Mobile" />
+</p>
 
 ---
 
-## Quick Start — Local Development
+## 🚀 Get started
 
-Run backend and frontend separately without Docker.
+Pick **one** of the three paths. Each step is a copy-paste.
 
-### Prerequisites
+### Path A — Try it on your computer (5 minutes)
 
-- Node.js ≥ 20
-- npm ≥ 10
-- MongoDB running locally (or Atlas URI)
+1. **Install Docker Desktop** → <https://www.docker.com/products/docker-desktop/> and open it.
+2. **Open a terminal** (macOS: *Terminal*, Windows: *PowerShell*) and run:
+   ```bash
+   docker run -d --name openpass -p 8080:8080 -v openpass-data:/data ghcr.io/bthanhtung/openpass:latest
+   ```
+3. **Open** <http://localhost:8080> and click **Get started**.
+4. Want sample data? Download [`docs/demo/demo-vault.json`](docs/demo/demo-vault.json) (all fake) and import it — see [Use it](#-use-it).
 
-### Backend
+Stop: `docker stop openpass` · Start again: `docker start openpass` · Your data stays in the `openpass-data` volume.
 
+### Path B — Put it online for your family or team (15 minutes)
+
+You need: a small Linux server (any VPS) and a domain name.
+
+1. **DNS:** create an `A` record, e.g. `pass.example.com` → your server's IP.
+2. **Install Docker** on the server:
+   ```bash
+   curl -fsSL https://get.docker.com | sh
+   ```
+3. **Download the deploy files and set your domain:**
+   ```bash
+   git clone https://github.com/bthanhtung/pwd-manager.git && cd pwd-manager/deploy
+   cp .env.example .env
+   nano .env          # set DOMAIN=pass.example.com
+   ```
+4. **Start** (HTTPS certificate is issued automatically by Caddy):
+   ```bash
+   docker compose up -d
+   ```
+5. Open `https://pass.example.com`, create your account, then your teammates create theirs.
+6. **Close registration** when everyone is in: set `SIGNUPS_ALLOWED=false` in `.env`, then `docker compose up -d`.
+
+**Update** later: `docker compose pull && docker compose up -d` (database migrations run automatically).
+**Back up**: copy the `openpass-data` volume, *and* ask users to keep an encrypted export (below).
+
+### Path C — Run from source (developers)
+
+Requires Node.js 20+.
 ```bash
-cd backend
-npm install
-
-# Create and configure .env
-cp ../.env.example .env
-# Edit backend/.env — set MONGODB_URI, JWT_SECRET, SERVER_ENCRYPTION_KEY
-
-# Start MongoDB (if running locally)
-docker compose up -d mongodb   # or: brew services start mongodb-community
-
-# Start API server (hot reload)
-npm run start:dev
+git clone https://github.com/bthanhtung/pwd-manager.git && cd pwd-manager
+npm run setup      # install server + web
+npm run dev        # API on :8080, web app on http://localhost:5173
+npm test           # 12 API tests (SQLite + Postgres) + 16 web tests
+npm run build && npm start   # production build on http://localhost:8080
 ```
-
-→ API available at **http://localhost:3000**  
-→ Swagger at **http://localhost:3000/docs**
-
-> See [`backend/README.md`](./backend/README.md) for full backend documentation.
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-
-# Create frontend env
-echo "NEXT_PUBLIC_API_URL=http://localhost:3000" > .env.local
-
-# Start dev server
-npm run dev
-```
-
-→ UI available at **http://localhost:3000** (Next.js default)
-
-> If running both locally at the same time, change the backend `PORT` to `3001` in `backend/.env` and update `NEXT_PUBLIC_API_URL` accordingly.
 
 ---
 
-## Environment Variables
+## 🧭 Use it
 
-Variables are loaded from the `.env` file at the **project root** (used by Docker Compose and the backend).
+1. **Create your vault** — pick a master password of 4–5 random words. ⚠️ Nobody can recover it if forgotten.
+2. **Import** — *Import & export → Import*, drop your export file (or `docs/demo/demo-vault.json`), click **Import**. Then delete the plain export file from your computer.
+3. **Add an item** — press <kbd>N</kbd>. Choose Login / Card / Identity / Note. Click 🪄 to generate a password; paste an authenticator key to get live 2FA codes.
+4. **Copy fast** — click the copy icon; the clipboard clears itself after 30 s. Shortcuts: <kbd>/</kbd> search · <kbd>G</kbd> generator · <kbd>L</kbd> lock · <kbd>↑</kbd><kbd>↓</kbd> move.
+5. **Share with a team** — *Teams → +*, name it, then **Add a member** by email (they must have an account). Choose a role. Compare the key fingerprint with your teammate (Settings → Account) to be sure.
+6. **Check your health** — *Security report* lists weak/reused/old passwords; **Run check** to look for breaches privately.
+7. **Protect your account** — *Settings → Security*: turn on two-step login, set auto-lock, see signed-in devices.
+8. **Install as an app** — in Chrome/Edge click the install icon in the address bar; on iPhone use *Share → Add to Home Screen*.
+9. **Back up** — *Import & export → Export → Encrypted backup*. Keep the file and its password somewhere safe.
 
-| Variable | Required | Description |
+---
+
+## ⚙️ Configuration
+
+| Variable | Default | What it does |
 |---|---|---|
-| `NODE_ENV` | No | `development` or `production` |
-| `PORT` | No | Backend HTTP port (default: `3000`) |
-| `MONGODB_URI` | **Yes** | MongoDB connection string |
-| `REDIS_HOST` | No | Redis host (default: `redis` in Docker) |
-| `REDIS_PORT` | No | Redis port (default: `6379`) |
-| `SERVER_ENCRYPTION_KEY` | **Yes** | **Exactly 32 ASCII chars** — AES-256-GCM key |
-| `JWT_SECRET` | **Yes** | JWT signing secret (min 32 chars recommended) |
-| `NEXT_PUBLIC_API_URL` | **Yes** | Backend API base URL for frontend |
+| `APP_URL` | `http://localhost:8080` | Public URL. Use `https://…` in production (enables Secure cookies & HSTS). |
+| `SIGNUPS_ALLOWED` | `true` | Set `false` to close registration. |
+| `DATABASE_URL` | `sqlite:///data/openpass.db` | Or `postgres://user:pass@host:5432/openpass`. |
+| `PORT` | `8080` | HTTP port inside the container. |
+| `SERVER_SECRET` | auto-generated | Persisted next to the SQLite file; set it explicitly with Postgres. |
+| `AUTH_RATE_LIMIT` | `10` | Sign-in attempts per minute per IP. |
+| `TRUST_PROXY` | `true` | Trust `X-Forwarded-*` from your reverse proxy. |
 
-> ⚠️ **Never commit `.env`** — it is listed in `.gitignore`. Only `.env.example` is committed.
-
----
-
-## How It Works
-
-### Saving a Password
-
-```
-User submits: { title: "GitHub", plainTextValue: "my-secret-token" }
-                    │
-                    ▼
-        CryptoService.encrypt(plainTextValue)
-        ┌─────────────────────────────────┐
-        │  Random 12-byte IV generated    │
-        │  AES-256-GCM cipher created     │
-        │  plainTextValue → encryptedData │
-        │  Auth tag generated (16 bytes)  │
-        └─────────────────────────────────┘
-                    │
-                    ▼
-        MongoDB stores: { title, encryptedData, iv, tag, ownerId }
-        ✅ plainTextValue is NEVER stored
-```
-
-### Retrieving Passwords
-
-```
-GET /vault  (Authorization: Bearer <token>)
-      │
-      ▼
-  JwtAuthGuard validates token → req.user.id
-      │
-      ▼
-  VaultService.findAllForUser(userId)
-  ┌────────────────────────────────────────┐
-  │  1. Find all groups user belongs to    │
-  │  2. Return vaults where:               │
-  │     - ownerId = userId  (personal)     │
-  │     - groupId in userGroups (shared)   │
-  └────────────────────────────────────────┘
-```
-
-### Team Groups Flow
-
-```
-POST /groups/create    → Creates group, user is ADMIN
-POST /groups/:id/members → ADMIN adds members (userId + role)
-POST /vault  { groupId } → Vault entry shared with that group
-GET  /vault            → Member sees group vaults automatically
-```
+Postgres with the bundled compose file: `docker compose --profile postgres up -d` (see comments in [`docker-compose.yml`](docker-compose.yml)).
 
 ---
 
-## API Overview
+## 🔒 Security model
 
-Full interactive docs at **http://localhost:3000/docs** (Swagger).
-
-| Category | Endpoint | Description |
-|---|---|---|
-| **Auth** | `POST /auth/register` | Create account |
-| **Auth** | `POST /auth/login` | Login → JWT token |
-| **Vault** | `POST /vault` | Save encrypted secret |
-| **Vault** | `GET /vault` | List my secrets + shared group secrets |
-
-**Authentication header for protected routes:**
 ```
-Authorization: Bearer <access_token>
+master password ─Argon2id(64 MiB, 3 passes)─▶ master key ─HKDF─┬─▶ auth key  → server stores argon2id(auth key)
+                                                               └─▶ enc key   → never leaves the device
+user key (random)      = AES-256-GCM(enc key)          stored on server as ciphertext
+item                   = AES-256-GCM(user key, JSON, aad = item id)
+team key (random)      = sealed to each member: ECDH P-256 ephemeral + HKDF + AES-GCM
 ```
 
+- The server never sees your master password, your keys, or any item content.
+- Sessions: opaque httpOnly `SameSite=Strict` cookies + custom CSRF header; login rate limiting; optional TOTP 2FA.
+- Strict Content-Security-Policy, no third-party scripts, no trackers, no favicon fetching.
+- Known limitations (v2.0): removing a team member revokes server access but does not yet rotate the team key; there is no browser extension yet.
+
+Found a vulnerability? Please email **bthanhtung.ite@gmail.com** instead of opening a public issue.
+
 ---
 
-## Scripts
+## 🧱 Architecture
 
-```bash
-# Generate secure keys for .env
-sh scripts/generate-keys.sh
-
-# Docker — start full stack
-docker compose up --build
-
-# Docker — start only infrastructure (MongoDB + Redis)
-docker compose up -d mongodb redis
-
-# Docker — stop and remove containers
-docker compose down
-
-# Docker — stop and remove containers + volumes (reset data)
-docker compose down -v
 ```
+server/   NestJS 11 + Kysely (SQLite / Postgres) — API, sessions, serves the web app
+web/      React 19 + Vite + Tailwind v4 PWA — all cryptography lives in web/src/crypto
+deploy/   docker compose + Caddy for one-command HTTPS
+docs/     demo data and media
+```
+API docs (Swagger): `/api/docs` on any running instance.
 
----
+## 🗺️ Roadmap
 
-## Security Design
+- Browser extension with autofill · Team key rotation on member removal · Passkeys / WebAuthn unlock · More languages (translations are one file: `web/src/i18n/vi.ts`).
 
-| Concern | Approach |
-|---|---|
-| Password hashing | Argon2id — prevents rainbow tables and GPU attacks |
-| Secret encryption | AES-256-GCM — authenticated, prevents tampering via auth tag |
-| Unique IV per entry | Random 12-byte IV per encryption — prevents pattern analysis |
-| Token security | JWT signed with `JWT_SECRET`; 7-day expiry |
-| Input validation | All DTOs validated with `class-validator`; extra fields stripped |
-| Key management | Keys in `.env` only — never hardcoded or committed |
+## 🤝 Contributing
 
----
+Issues and PRs welcome. Run `npm test` before opening a PR; new UI strings go through `t('key', 'English')` with a Vietnamese entry in `web/src/i18n/vi.ts`.
 
-## Contributing
+## 📄 License
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/my-feature`
-3. Follow the local development setup above
-4. Open a pull request
-
----
-
-## License
-
-MIT
+[MIT](LICENSE) — made with care by [TungDaDev](https://www.tungdadev.com/) & [Davintek](https://davintek.com/).

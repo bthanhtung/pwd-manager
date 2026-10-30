@@ -1,0 +1,31 @@
+# OpenPass on your own server with automatic HTTPS (Let's Encrypt via Caddy).
+#
+#   1. Point a DNS A record (e.g. pass.example.com) to this server's IP.
+#   2. cp .env.example .env   and set DOMAIN=pass.example.com
+#   3. docker compose up -d
+#
+services:
+  openpass:
+    image: ghcr.io/bthanhtung/openpass:latest
+    restart: unless-stopped
+    volumes:
+      - openpass-data:/data
+    environment:
+      APP_URL: https://${DOMAIN}
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED:-true}
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+
+volumes:
+  openpass-data:
+  caddy-data:

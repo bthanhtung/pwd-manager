@@ -28,7 +28,7 @@ async function signup(email: string, authKey = b64(32)) {
 }
 
 beforeAll(async () => {
-  const config = { ...loadConfig({ DATABASE_URL: 'sqlite::memory:', SERVER_SECRET: 'test-secret' }), trustProxy: false };
+  const config = { ...loadConfig({ DATABASE_URL: process.env.TEST_DATABASE_URL || 'sqlite::memory:', SERVER_SECRET: 'test-secret' }), trustProxy: false };
   const mod = await Test.createTestingModule({ imports: [AppModule.forRoot(config)] }).compile();
   app = mod.createNestApplication();
   configureApp(app, config);

@@ -1,0 +1,277 @@
+{
+  "encrypted": false,
+  "folders": [],
+  "items": [
+    {
+      "type": 1,
+      "name": "GitHub",
+      "favorite": true,
+      "notes": "Work account — SSO via Okta",
+      "login": {
+        "username": "octocat",
+        "password": "Gh!7vQ#2mLp9xZr4wT",
+        "uris": [
+          {
+            "uri": "https://github.com/login"
+          }
+        ],
+        "totp": "JBSWY3DPEHPK3PXP"
+      }
+    },
+    {
+      "type": 1,
+      "name": "Google Workspace",
+      "favorite": true,
+      "notes": "",
+      "login": {
+        "username": "alex@acme-demo.co",
+        "password": "Gw$4nB8!qLz2vRx9",
+        "uris": [
+          {
+            "uri": "https://accounts.google.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "AWS Console",
+      "favorite": false,
+      "notes": "Hardware key in the office safe",
+      "login": {
+        "username": "root-ops",
+        "password": "Aws_9fK!2pQz$7LmXc",
+        "uris": [
+          {
+            "uri": "https://console.aws.amazon.com"
+          }
+        ],
+        "totp": "KRSXG5CTMVRXEZLU"
+      }
+    },
+    {
+      "type": 1,
+      "name": "Figma",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "design@acme-demo.co",
+        "password": "Fg$83kdLq2!vnPa",
+        "uris": [
+          {
+            "uri": "https://www.figma.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Notion",
+      "favorite": false,
+      "notes": "Shared team login — please rotate!",
+      "login": {
+        "username": "team@acme-demo.co",
+        "password": "password123",
+        "uris": [
+          {
+            "uri": "https://www.notion.so"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Slack",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "alex@acme-demo.co",
+        "password": "password123",
+        "uris": [
+          {
+            "uri": "https://acme-demo.slack.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Stripe",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "billing@acme-demo.co",
+        "password": "St#Kq8!vz2Lp0wYe",
+        "uris": [
+          {
+            "uri": "https://dashboard.stripe.com"
+          }
+        ],
+        "totp": "MZXW6YTBOI======"
+      }
+    },
+    {
+      "type": 1,
+      "name": "Vercel",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "acme-demo",
+        "password": "Vc$2pLq9!kZ7xwMn",
+        "uris": [
+          {
+            "uri": "https://vercel.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Linear",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "alex@acme-demo.co",
+        "password": "Ln#7qZ2!kv9LmpQa",
+        "uris": [
+          {
+            "uri": "https://linear.app"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Cloudflare",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "ops@acme-demo.co",
+        "password": "Cf!8vLq2#Zp4kwRt",
+        "uris": [
+          {
+            "uri": "https://dash.cloudflare.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Netflix",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "family@example.com",
+        "password": "netflix2020",
+        "uris": [
+          {
+            "uri": "https://www.netflix.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Spotify",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "alex.demo@example.com",
+        "password": "summer2019",
+        "uris": [
+          {
+            "uri": "https://open.spotify.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Home Wi-Fi router",
+      "favorite": false,
+      "notes": "SSID: Acme-Home-5G",
+      "login": {
+        "username": "admin",
+        "password": "Rt!9qLz#2vKp8mWx",
+        "uris": [
+          {
+            "uri": "http://192.168.1.1"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 1,
+      "name": "Airbnb",
+      "favorite": false,
+      "notes": "",
+      "login": {
+        "username": "alex.demo@example.com",
+        "password": "Ab#3kQz8!pLv2nWy",
+        "uris": [
+          {
+            "uri": "https://www.airbnb.com"
+          }
+        ],
+        "totp": null
+      }
+    },
+    {
+      "type": 3,
+      "name": "Company Visa (test card)",
+      "notes": "Stripe test number — not a real card",
+      "card": {
+        "cardholderName": "ALEX NGUYEN",
+        "number": "4242 4242 4242 4242",
+        "expMonth": "12",
+        "expYear": "2030",
+        "code": "123"
+      }
+    },
+    {
+      "type": 3,
+      "name": "Personal Mastercard (test card)",
+      "card": {
+        "cardholderName": "ALEX NGUYEN",
+        "number": "5555 5555 5555 4444",
+        "expMonth": "08",
+        "expYear": "2029",
+        "code": "321"
+      }
+    },
+    {
+      "type": 4,
+      "name": "Alex Nguyen",
+      "identity": {
+        "firstName": "Alex",
+        "lastName": "Nguyen",
+        "email": "alex.demo@example.com",
+        "phone": "+84 900 000 000",
+        "company": "Acme Demo Co.",
+        "address1": "1 Demo Street",
+        "city": "Ho Chi Minh City",
+        "country": "Viet Nam"
+      }
+    },
+    {
+      "type": 2,
+      "name": "Server recovery codes",
+      "notes": "prod-db-01: 8F3K-2LQP-9ZXA\nprod-db-02: 7MNB-4TRW-1QSD\n(all fake, for the demo)"
+    },
+    {
+      "type": 2,
+      "name": "Office door & alarm",
+      "notes": "Door: 4721#\nAlarm: 0815 (fake demo data)"
+    }
+  ]
+}
