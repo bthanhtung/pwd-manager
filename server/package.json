@@ -2,7 +2,7 @@
   "name": "openpass-server",
   "version": "2.0.0",
   "private": true,
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js",

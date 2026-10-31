@@ -10,7 +10,7 @@ Open-source, zero-knowledge password manager for you and your team — self-host
 🇻🇳 [Hướng dẫn tiếng Việt](docs/vi/HUONG-DAN.md)
 
 [![CI](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/bthanhtung/pwd-manager/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-6d4aff.svg)](LICENSE)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-6d4aff.svg)](LICENSE)
 ![Languages](https://img.shields.io/badge/i18n-English%20·%20Tiếng%20Việt-3dd68c)
 
 <img src="docs/media/demo.gif" alt="OpenPass demo: sign up, import, reveal and copy a password, generator, security report" width="900" />
@@ -165,8 +165,20 @@ API docs (Swagger): `/api/docs` on any running instance.
 
 ## 🤝 Contributing
 
-Issues and PRs welcome. Run `npm test` before opening a PR; new UI strings go through `t('key', 'English')` with a Vietnamese entry in `web/src/i18n/vi.ts`.
+Contributions are welcome, from typo fixes to the roadmap items above. Read [CONTRIBUTING.md](CONTRIBUTING.md) for
+the setup, the checks to run, and the rules that keep vaults safe (the server never sees secrets, no home-made
+crypto, migrations for both SQLite and PostgreSQL). Good places to start:
+
+- Translations: a new language is one file next to `web/src/i18n/vi.ts`.
+- Self-hosting guides for your platform (NAS, Raspberry Pi, cloud VMs) in `docs/`.
+- Anything in the [issue list](https://github.com/bthanhtung/pwd-manager/issues), or
+  [open a new one](https://github.com/bthanhtung/pwd-manager/issues/new/choose).
+
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md). Vulnerabilities go through [SECURITY.md](SECURITY.md),
+never a public issue.
 
 ## 📄 License
 
-[MIT](LICENSE)
+[GNU General Public License v3.0](LICENSE). Free to use, self-host, study, and modify, for personal, family, or
+company use; if you distribute a modified version, it must stay under GPL-3.0 with its source available.
+Contributions made before the switch to GPL-3.0 remain available under [MIT](LICENSES/MIT.txt).

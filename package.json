@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "description": "Open-source, zero-knowledge password manager for you and your team.",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "scripts": {
     "setup": "npm ci --prefix server && npm ci --prefix web",
     "dev": "node scripts/dev.mjs",

@@ -64,4 +64,4 @@ Cập nhật phiên bản mới: `git pull && docker compose up -d --build`.
 
 - **Quên mật khẩu chính?** Không khôi phục được — đó là cái giá của mã hoá đầu-cuối. Hãy giữ bản sao lưu mã hoá.
 - **Chủ máy chủ đọc được mật khẩu không?** Không. Máy chủ chỉ giữ dữ liệu đã mã hoá.
-- **Có tốn phí không?** Không. Giấy phép MIT, dùng cho cá nhân, gia đình hay công ty đều được.
+- **Có tốn phí không?** Không. Giấy phép GPL-3.0, dùng cho cá nhân, gia đình hay công ty đều được; nếu bạn phân phối bản đã sửa thì phải giữ GPL-3.0 và công khai mã nguồn.

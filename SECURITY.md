@@ -2,8 +2,9 @@
 
 ## Reporting a vulnerability
 
-Please **do not open a public issue**. Email **bthanhtung.ite@gmail.com** with a description, steps to reproduce
-and the affected version. You will get an answer within 72 hours. Fixes land on `main` with a note in the
+Please **do not open a public issue**. Report it privately through
+[GitHub security advisories](https://github.com/bthanhtung/pwd-manager/security/advisories/new) with a description,
+steps to reproduce and the affected version. You will get an answer within 72 hours. Fixes land on `main` with a note in the
 commit message, with credit if you want it. Self-hosters update with `git pull && docker compose up -d --build`.
 
 ## Threat model
